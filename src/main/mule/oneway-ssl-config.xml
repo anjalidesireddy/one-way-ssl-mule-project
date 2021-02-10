@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+	<http:listener-config name="HTTPs_Listener_server" doc:name="HTTP Listener config" doc:id="4d958993-038c-401d-9c92-e5eb56240299" >
+		<http:listener-connection protocol="HTTPS" host="0.0.0.0" port="8082" >
+			<tls:context >
+				<tls:key-store type="jks" path="server-keystore.jks" alias="mule" keyPassword="password" password="password"/>
+			</tls:context>
+		</http:listener-connection>
+	</http:listener-config>
+	<http:listener-config name="HTTP_Listener_client" doc:name="HTTP Listener config" doc:id="8235cc80-2fba-4e5f-bfd9-9d7d330c819a" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTPs_Request_client" doc:name="HTTP Request configuration" doc:id="aa35c317-d455-445a-b677-64014e816032" >
+		<http:request-connection protocol="HTTPS" host="localhost" port="8082" >
+			<tls:context >
+				<tls:trust-store path="client-truststore.jks" password="password" type="jks"/>
+			</tls:context>
+		</http:request-connection>
+	</http:request-config>
+	<flow name="oneway-ssl-server" doc:id="4deee7a1-a810-4eb7-9418-8f398d6b5fc8" >
+		<http:listener doc:name="Listener" doc:id="71715cdf-6672-4d5b-8518-2523e1fa8522" config-ref="HTTPs_Listener_server" path="/ssloneway"/>
+		<set-payload value='#["tested one way ssl"]' doc:name="Set Payload" doc:id="b53abe5c-5455-45a6-bf12-6a131f6d1eeb" />
+		<logger level="INFO" doc:name="Logger" doc:id="b6b059d6-d372-45bb-958b-671771c2e850" message="#[payload]"/>
+	</flow>
+	<flow name="oneway-ssl-client" doc:id="3680fd49-194a-449c-bb27-8bed1297cbbd" >
+		<http:listener doc:name="Listener" doc:id="6d226014-0c7b-44bf-9d26-e881c693d5c8" config-ref="HTTP_Listener_client" path="/test"/>
+		<http:request method="GET" doc:name="Request" doc:id="2a2db22f-42d3-47df-addc-8ca5751b29b5" config-ref="HTTPs_Request_client" path="/ssloneway"/>
+	</flow>
+</mule>
