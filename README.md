@@ -40,7 +40,7 @@ Step 2:
 
 To Export the public certificate from server keystore.
 
-keytool -export -alias mule -keystore server-keystore.jks -file server-trust.crt
+keytool -export -alias mulesoft-server -keystore server-keystore.jks -file server-trust.crt
 
 Step 3: 
 
