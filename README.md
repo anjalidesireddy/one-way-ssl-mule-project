@@ -1,5 +1,10 @@
 # one-way-ssl-mule-project
 
+One way SSL(Secure Socket Layer) means client side validation.
+Public key's are used encryption
+Private key's are used for decryption
+Note: Private key's never sharable.
+
 Step 1: Generate server side keystore
 
 keytool -genkey -alias mulesoft-server -keysize 2048 -keyalg RSA -keystore server-keystore.jks
