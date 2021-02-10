@@ -24,7 +24,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	</http:request-config>
 	<flow name="oneway-ssl-server" doc:id="4deee7a1-a810-4eb7-9418-8f398d6b5fc8" >
 		<http:listener doc:name="Listener" doc:id="71715cdf-6672-4d5b-8518-2523e1fa8522" config-ref="HTTPs_Listener_server" path="/ssloneway"/>
-		<set-payload value='#["tested one way ssl"]' doc:name="Set Payload" doc:id="b53abe5c-5455-45a6-bf12-6a131f6d1eeb" />
+		<set-payload value='#["tested one way ssl server side requested resource"]' doc:name="Set Payload" doc:id="b53abe5c-5455-45a6-bf12-6a131f6d1eeb" />
 		<logger level="INFO" doc:name="Logger" doc:id="b6b059d6-d372-45bb-958b-671771c2e850" message="#[payload]"/>
 	</flow>
 	<flow name="oneway-ssl-client" doc:id="3680fd49-194a-449c-bb27-8bed1297cbbd" >
